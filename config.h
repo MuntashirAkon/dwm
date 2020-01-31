@@ -111,7 +111,7 @@ static Key keys[] = {
 	/* { MODKEY,			XK_Tab,		view,		{0} }, */
 	/* { MODKEY|ShiftMask,		XK_Tab,		spawn,		SHCMD("") }, */
 	{ MODKEY,			XK_q,		killclient,	{0} },
-	/* { MODKEY|ShiftMask,		XK_q,		spawn,		SHCMD("") }, */
+	{ MODKEY|ShiftMask,		XK_q,		spawn,		SHCMD("kill -9 `xdotool getwindowfocus getwindowpid`") },
 	{ MODKEY,			XK_w,		spawn,		SHCMD("$BROWSER") },
 	/* { MODKEY|ShiftMask,		XK_w,		spawn,		SHCMD("") }, */
 	{ MODKEY,			XK_e,		spawn,		SHCMD("st -e neomutt ; pkill -RTMIN+12 dwmblocks") },
@@ -138,7 +138,7 @@ static Key keys[] = {
 	/* { MODKEY|ShiftMask,		XK_backslash,		spawn,		SHCMD("") }, */
 
 	{ MODKEY,			XK_a,		spawn,		SHCMD("st -e alsamixer ; pkill -RTMIN+10 dwmblocks") },
-	/* { MODKEY|ShiftMask,		XK_a,		spawn,		SHCMD("") }, */
+	{ MODKEY|ShiftMask,		XK_a,		spawn,		SHCMD("st -e htop") },
 	{ MODKEY,                       XK_s,      togglesticky,   {0} },
 	/* { MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("") }, */
 	{ MODKEY,			XK_d,		spawn,          {.v = dmenucmd } },
@@ -164,7 +164,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_z,		incrgaps,	{.i = -1 } },
 	{ MODKEY,			XK_x,		spawn,		SHCMD("slock & xset dpms force off; mpc pause ; pauseallmpv") },
 	{ MODKEY|ShiftMask,		XK_x,		spawn,		SHCMD("prompt \"Shutdown computer?\" \"sudo -A shutdown -h now\"") },
-	/* { MODKEY,			XK_c,		spawn,		SHCMD("") }, */
+	{ MODKEY,			XK_c,		spawn,		SHCMD("st -e calcurse -D ~/.config/calcurse") },
 	{ MODKEY|ShiftMask,		XK_c,		spawn,		SHCMD("mpv --no-osc --no-input-default-bindings --input-conf=/dev/null --title=mpvfloat /dev/video0") },
 	/* { MODKEY,			XK_v,		spawn,		SHCMD("") }, */
 	/* { MODKEY|ShiftMask,		XK_v,		spawn,		SHCMD("") }, */
@@ -216,7 +216,7 @@ static Key keys[] = {
 	{ 0,	XF86XK_AudioPrev,	spawn,		SHCMD("mpc prev") },
 	{ 0,	XF86XK_AudioNext,	spawn,		SHCMD("mpc next") },
 	{ 0,	XF86XK_AudioPause,	spawn,		SHCMD("mpc pause") },
-	{ 0,	XF86XK_AudioPlay,	spawn,		SHCMD("mpc play") },
+	{ 0,	XF86XK_AudioPlay,	spawn,		SHCMD("mpc toggle") },
 	{ 0,	XF86XK_AudioStop,	spawn,		SHCMD("mpc stop") },
 	{ 0,	XF86XK_AudioRewind,	spawn,		SHCMD("mpc seek -10") },
 	{ 0,	XF86XK_AudioForward,	spawn,		SHCMD("mpc seek +10") },
@@ -229,6 +229,8 @@ static Key keys[] = {
 	{ 0,	XF86XK_ScreenSaver,	spawn,		SHCMD("slock & xset dpms force off; mpc pause; pauseallmpv") },
 	{ 0,	XF86XK_TaskPane,	spawn,		SHCMD("st -e htop") },
 	{ 0,	XF86XK_Mail,		spawn,		SHCMD("st -e neomutt ; pkill -RTMIN+12 dwmblocks") },
+        { 0,    XF86XK_MonBrightnessDown,  spawn,          SHCMD("xbacklight -dec 15") },
+        { 0,    XF86XK_MonBrightnessUp,    spawn,          SHCMD("xbacklight -inc 15") },
 	{ 0,	XF86XK_MyComputer,	spawn,		SHCMD("st -e $FILE /") },
 	{ 0,	XF86XK_Battery,		spawn,		SHCMD("notify-send \"Battery status\" \"$(batstat)\"") },
 	{ 0,	XF86XK_Launch1,		spawn,		SHCMD("xset dpms force off") },
