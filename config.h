@@ -12,8 +12,8 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int vertpad            = 10;       /* vertical padding of bar */
 static const int sidepad            = 20;       /* horizontal padding of bar */
-static const char *fonts[]          = { "monospace:size=10" };
-static const char dmenufont[]       = "monospace:size=10";
+static const char *fonts[]          = { "monospace:size=12" };
+static const char dmenufont[]       = "monospace:size=12";
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
@@ -64,8 +64,8 @@ static const Layout layouts[] = {
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 #define STACKKEYS(MOD,ACTION) \
-	{ MOD, XK_j,     ACTION##stack, {.i = INC(+1) } }, \
-	{ MOD, XK_k,     ACTION##stack, {.i = INC(-1) } }, \
+	{ MOD,	XK_j,	ACTION##stack,	{.i = INC(+1) } }, \
+	{ MOD,	XK_k,	ACTION##stack,	{.i = INC(-1) } }, \
 	/* { MOD, XK_grave, ACTION##stack, {.i = PREVSEL } }, \ */
 	/* { MOD, XK_q,     ACTION##stack, {.i = 0 } }, \ */
 	/* { MOD, XK_a,     ACTION##stack, {.i = 1 } }, \ */
@@ -77,7 +77,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
@@ -88,6 +88,7 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	STACKKEYS(MODKEY,                          focus)
 	STACKKEYS(MODKEY|ShiftMask,                push)
+	{ MODKEY|ShiftMask,		XK_Escape,	spawn,	SHCMD("prompt \"Leave Xorg?\" \"killall Xorg\"") },
 	{ MODKEY,			XK_grave,	spawn,	SHCMD("dmenuunicode") },
 	/* { MODKEY|ShiftMask,		XK_grave,	togglescratch,	SHCMD("") }, */
 	TAGKEYS(			XK_1,		0)
@@ -108,7 +109,7 @@ static Key keys[] = {
 	/* { MODKEY,			XK_BackSpace,	spawn,		SHCMD("") }, */
 	{ MODKEY|ShiftMask,		XK_BackSpace,	spawn,		SHCMD("dmenupower") },
 
-	/* { MODKEY,			XK_Tab,		view,		{0} }, */
+	{ MODKEY,			XK_Tab,		view,		{0} },
 	/* { MODKEY|ShiftMask,		XK_Tab,		spawn,		SHCMD("") }, */
 	{ MODKEY,			XK_q,		killclient,	{0} },
 	{ MODKEY|ShiftMask,		XK_q,		spawn,		SHCMD("kill -9 `xdotool getwindowfocus getwindowpid`") },
@@ -234,6 +235,10 @@ static Key keys[] = {
 	{ 0,	XF86XK_MyComputer,	spawn,		SHCMD("st -e $FILE /") },
 	{ 0,	XF86XK_Battery,		spawn,		SHCMD("notify-send \"Battery status\" \"$(batstat)\"") },
 	{ 0,	XF86XK_Launch1,		spawn,		SHCMD("xset dpms force off") },
+
+	{ 0,	XF86XK_TouchpadToggle,	spawn,		SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
+	{ 0,	XF86XK_TouchpadOff,	spawn,		SHCMD("synclient TouchpadOff=1") },
+	{ 0,	XF86XK_TouchpadOn,	spawn,		SHCMD("synclient TouchpadOff=0") },
 
 	/* { MODKEY,                       XK_space,  setlayout,      {0} }, */
 
